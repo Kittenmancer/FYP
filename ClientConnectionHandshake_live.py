@@ -3,7 +3,7 @@
 import socket, time
 import diffiehellmanv2_live as dh
 
-public = dh.get_publickey()
+public,a = dh.get_publickey()
 
 def Tcp_connect( HostIp, Port ):
     global s
@@ -30,9 +30,12 @@ def Tcp_Close( ):
 
 Tcp_connect( '192.168.0.19', 17098)
 Tcp_Write(str(public))
-shared = dh.get_sharedkey(public, int(Tcp_Read()))
+readData = int(Tcp_Read())
+print("Public", public)
+print("read data", readData)
+shared = dh.get_sharedkey(a, int(readData))
 #Tcp_Write(str(shared))
-print(shared)
+print("shared", shared)
 print('closing connection')
 Tcp_Close()
 print('connection closed')
