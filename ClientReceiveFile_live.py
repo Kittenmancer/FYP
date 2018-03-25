@@ -2,11 +2,11 @@ import socket
 import time
 
 timestr = time.strftime("%Y%m%d-%H%M%S")
-socketConnection = socket.gethostname()
+socketConnection=socket.socket()
 host = socket.gethostname()
-port = 17099
+port = 17098
 socketConnection.connect((host, port))
-newFile = open('CapturedImage'+timestr+'.png')
+newFile = open('CapturedImage'+timestr+'.png', 'wb')
 print('Incoming transmission')
 l = socketConnection.recv(1024)
 while(l):
