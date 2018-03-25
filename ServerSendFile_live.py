@@ -4,7 +4,7 @@ socketConnection = socket.socket()
 
 host = socket.gethostname()
 port = 17099
-socketConnection.bins((host, port))
+socketConnection.bind((host, port))
 sentFile = open('/home/pi/Desktop/CameraCapture.jpg')
 socketConnection.listen(5)
 
@@ -14,7 +14,7 @@ while True:
     print("sending file")
     l=sentFile.read(1024)
     while (l):
-        print "sending in progress..."
+        print("sending in progress...")
         socketConnection.send(l)
         l=sentFile.read(1024)
     sentFile.close()
