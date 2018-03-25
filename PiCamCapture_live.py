@@ -1,3 +1,4 @@
+#***LEGACY CODE REDUNDANT IN CURRENT IMPLEMENTATION***
 from picamera import PiCamera
 from time import sleep
 import os
