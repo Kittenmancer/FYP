@@ -1,19 +1,15 @@
-import socket
-import time
+import socket, base64
+socketConnection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-timestr = time.strftime("%Y%m%d-%H%M%S")
-socketConnection=socket.socket()
-host = socket.gethostname()
+IP = socket.gethostname() #as we're locally hosted, this is the same IP as the server.
 port = 17098
-socketConnection.connect((host, port))
-newFile = open('CapturedImage'+timestr+'.png', 'wb')
-print('Incoming transmission')
-l = socketConnection.recv(1024)
-while(l):
-    print('Recieving transmission...')
-    newFile.write(l)
-    l=socketConnection.recv(1024)
-newFile.close()
-print('Transmission received')
-socketConnection.shutdown(socket.SHUT_WR)
-soccketConenction.close
+bufferSize = 9999999
+handshake = str.encode('Hi')
+
+socketConnection.connect((IP, port))
+socketConnection.send(handshake)
+data = socketConnection.recv(bufferSize)
+byteString = base64.b64decode(data)
+with open("imageToSave.png", "wb") as fh:
+   fh.write(base64.decodebytes(data))
+socketConnection.close()

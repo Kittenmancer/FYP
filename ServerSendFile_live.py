@@ -1,22 +1,22 @@
 import socket
-
-socketConnection = socket.socket()
+import io, base64
+socketConnection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 host = socket.gethostname()
-port = 17099
+port = 17098
+bufferSize = 9999999
+sentFile = open('small.png','rb')
+byteString = base64.b64encode(sentFile.read())
+with open("manglecheck.png", "wb") as fh:
+   fh.write(base64.decodebytes(byteString))
 socketConnection.bind((host, port))
-sentFile = open('/home/pi/Desktop/CameraCapture.jpg')
 socketConnection.listen(5)
 
-while True:
-    client, addr = socketConnection.accept()
-    print("connection established from ", addr)
-    print("sending file")
-    l=sentFile.read(1024)
-    while (l):
-        print("sending in progress...")
-        socketConnection.send(l)
-        l=sentFile.read(1024)
-    sentFile.close()
-    print("File transmission complete")
-    socketConnection.close()
+client, address = socketConnection.accept()
+print ('Connection from:', address)
+connectionOpen = True
+while connectionOpen:
+	data = client.recv(bufferSize)
+	if not data: break
+	print ("received:", data)
+	client.sendall(byteString)
