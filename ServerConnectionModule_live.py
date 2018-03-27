@@ -1,6 +1,8 @@
+#RECEIVER
 #!/usr/bin/env python
 import socket, time
 import diffiehellmanv2_live as dh
+from AESCrypto_live import AESCipher
 #things to begin with
 #dh.get_publickey()
 
@@ -42,16 +44,25 @@ def Tcp_Close( ):
    s.close()
 
 
-Tcp_server_wait ( 5, 17098 )
+Tcp_server_wait ( 500, 17098 )
 Tcp_server_next()
-#print (Tcp_Read())
 Tcp_Write(str(public))
 readData = int(Tcp_Read())
 print("Public", public)
 print("read data", readData)
-shared = dh.get_sharedkey(a, int(readData))
-print("shared",shared)
-#print (Tcp_Read())
+my_prime, my_key = dh.get_sharedkey(a, int(readData))
+my_cipher = AESCipher(my_key)
+#print("shared",shared)
+#image = Tcp_Read()
+fp = open("imageToSave.png",'wb')
+image = s.recv(20000000)
+fp.write(image)
+#while True:
+#    data= s.recv(1024)
+#    if not data:
+#        break
+#    fp.write(data)
+fp.close()
 print('closing connection')
 Tcp_Close()
 print('connection closed')

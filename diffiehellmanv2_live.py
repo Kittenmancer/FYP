@@ -4,7 +4,7 @@ from __future__ import print_function
 import random
 import numpy as np
 import os
-from binascii imprt unhexlify, hexlify
+from binascii import unhexlify, hexlify
 import hashlib
 from hkdf import Hkdf
 
@@ -21,7 +21,7 @@ def get_sharedkey(a, B):
 # Alice Computes Shared Secret: s = B^a mod p
 
     x = pow(B,a,sharedPrime)
-    aKDF = Hkdf(none, str(x).encode(), hash=hashlib.sha512)
-    #print(x)
-    return x, aKDF
+    aKDF = Hkdf(None, str(x).encode(), hash=hashlib.sha512)
+    aKey = aKDF.expand(b"context1", 32)
+    return x, aKey
 

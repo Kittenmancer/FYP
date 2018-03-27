@@ -17,13 +17,17 @@ print ('Connection from:', address)
 connectionOpen = True
 
 while connectionOpen:
-	clientKey = client.recv(bufferSize)
-	if not (clientKey): break
-	client.sendall(handshake)
+	#clientKey = NULL
+	#clientKey = client.recv(bufferSize)
+	#print(clientKey)
+	#if not (clientKey): break
+	#client.sendall(handshake)
 	imageData = client.recv(bufferSize)
-	print(len(imageData))
-	byteStream = base64.b64decode(imageData)
-	with open('ImageName.png', 'wb') as fh:
+	#print(imageData)
+	#print(len(imageData))
+	#byteStream = base64.b64decode(imageData)
+	with open('ImageName.jpg', 'wb') as fh:
 		fh.write(base64.decodebytes(imageData))
-	client.send(str.encode('True'))
-connectionOpen = False
+	#client.send(str.encode('True'))
+#client.close()
+#connectionOpen = False

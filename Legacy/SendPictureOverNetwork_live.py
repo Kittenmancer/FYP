@@ -6,7 +6,6 @@ host = socket.gethostname()
 port = 17098
 bufferSize = 9999999
 sentFile = open('small.png','rb')
-#sentFile = open('/home/pi/Desktop/CameraCapture.jpg')
 byteString = base64.b64encode(sentFile.read())
 with open("manglecheck.png", "wb") as fh:
    fh.write(base64.decodebytes(byteString))
@@ -21,3 +20,4 @@ while connectionOpen:
 	if not data: break
 	print ("received:", data)
 	client.sendall(byteString)
+
