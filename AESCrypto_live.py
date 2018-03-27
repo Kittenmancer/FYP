@@ -1,11 +1,11 @@
 import base64
 import hashlib
-from Crypto import Random
+#from Crypto import Random
 from Crypto.Cipher import AES
 class AESCipher(object):
     def __init__(self, key): 
         self.bs = 32
-        self.key = hashlib.sha256(key.encode()).digest()
+        self.key = hashlib.sha256(key).digest()
     def encrypt(self, raw):
         raw = self._pad(raw)
         iv = Random.new().read(AES.block_size)

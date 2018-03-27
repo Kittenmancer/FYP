@@ -56,7 +56,8 @@ my_cipher = AESCipher(my_key)
 #image = Tcp_Read()
 fp = open("imageToSave.png",'wb')
 image = s.recv(20000000)
-fp.write(image)
+image = my_cipher.decrypt(image)
+fp.write(bytes(image, "utf-8"))
 #while True:
 #    data= s.recv(1024)
 #    if not data:
