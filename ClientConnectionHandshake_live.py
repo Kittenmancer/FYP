@@ -1,7 +1,8 @@
-
+#Capture
 #christopher taylor 07/03/18 using code from Ben Knisley found at: https://gist.github.com/BenKnisley/5647884
-import socket, time
+import socket, time, os
 import diffiehellmanv2_live as dh
+from AESCrypto_live import AESCipher
 
 public,a = dh.get_publickey()
 
@@ -31,44 +32,20 @@ def Tcp_Close( ):
 Tcp_connect( '192.168.0.19', 17098)
 Tcp_Write(str(public))
 readData = int(Tcp_Read())
-print("Public", public)
-print("read data", readData)
-shared = dh.get_sharedkey(a, int(readData))
-#Tcp_Write(str(shared))
-print("shared", shared)
+#print("Public", public)
+#print("read data", readData)
+my_prime, my_key = dh.get_sharedkey(a, int(readData))
+my_cipher = AESCipher(my_key)
+#sentFile = open('/home/pi/Desktop/small.png', 'rb')
+#byteStream = sentFile.read()
+byteStream = my_cipher.encrypt("Plain text string example")
+#fp = open("isitworking.png","wb")
+#isItWorking = my_cipher.decrypt(byteStream)
+#fp.write(isItWorking.encode())
+#fp.close()
+
+s.sendall(byteStream)
 print('closing connection')
 Tcp_Close()
 print('connection closed')
 
-#import sys
-#from socket import socket, AF_INET, SOCK_DGRAM
-#
-#SERVER_IP   = 
-#PORT_NUMBER = 5000
-#SIZE = 1024
-#
-#import time
-#import diffiehellmanv2_live as dh
-#
-#secret = 0
-#recieved = False
-#mySocket = socket( AF_INET, SOCK_DGRAM )
-#mySocket.connect((SERVER_IP,PORT_NUMBER))
-#myMessage = dh.get_publickey()
-#
-#mySocket.send(str(myMessage).encode('utf-8'))
-#mySocket.close()
-#mySocket.connect((SERVER_IP,PORT_NUMBER))
-#while recieved == False:
-#
-#(data,addr) = mySocket.recv(SIZE)
-#secret = dh.get_sharedkey(int(data))
-#print(secret)
-#print(data)
-#mySocket.close()    
-#
-#mySocket.sendto(myMessage1.encode('utf-8'),(SERVER_IP,PORT_NUMBER))
-#
-#sys.exit()
-
-#!/usr/bin/env python
