@@ -58,7 +58,7 @@ my_cipher = AESCipher(my_key)
 recievedString = s.recv(20000000)
 decryptedString = my_cipher.decrypt(recievedString)
 #fp.write(image.encode())
-print("Encrypted data: ", recievedString)
+print("Encrypted data received over network: ", recievedString)
 print("Decrypted Data: ", decryptedString)
 #while True:
 #    data= s.recv(1024)
